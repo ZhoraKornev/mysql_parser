@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} List of databases in config directory {% endblock %}
+
+{% block body %}
+    {{ form_start(mainForm) }}
+    {{ form_widget(mainForm) }}
+    <br>
+    <button type="submit" class="btn btn-primary"> submit</button>
+    {{ form_end(mainForm) }}
+
+{% endblock %}
