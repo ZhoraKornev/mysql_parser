@@ -7,17 +7,14 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Exception\ValidatorException;
 
-
 class FileGenerator
 {
     private string $filePathToSave;
 
     public function __construct(private SerializerInterface $serializer, private Filesystem $filesystem)
     {
+        //TODO remove to config
         $this->filePathToSave = '/app/source/db/tmp/';
-        if (!is_dir($this->filePathToSave)) {
-            mkdir($this->filePathToSave, 0755, true);
-        }
     }
 
     public function generateFile(array $data, string $format): string

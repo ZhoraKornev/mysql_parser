@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Factory\FileGenerator;
+use App\Factory\ResultFileFactory;
 use App\Form\ListDataBaseFormDTO;
 use App\Form\ListDatabaseFormType;
 use App\Service\DataBaseDriver;
@@ -14,10 +15,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProcessDataBaseController extends AbstractController
 {
+
+
     /**
      * @Route("/process/data", name="app_process_data_base",methods={"POST"})
      */
-    public function processDataBaseToFile(Request $request, DataBaseDriver $tempDataBase, FileGenerator $fileGenerator): Response
+    public function processDataBaseToFile(
+        Request           $request,
+        DataBaseDriver    $tempDataBase,
+        FileGenerator     $fileGenerator,
+        ResultFileFactory $resultFileFactory
+    ): Response
     {
         $form = $this->createForm(ListDatabaseFormType::class);
         $form->handleRequest($request);
@@ -31,14 +39,13 @@ class ProcessDataBaseController extends AbstractController
             $tempDataBase->rollBackToStartInstance();
             $parser = new Parser();
             $parsedContent = $parser->parse($dataArr, $dto->contentColumn, $dto->titleColumn);
-            $fileGenerator->generateFile($parsedContent, $dto->selectedExtension);
-
-            dd($parsedContent);
+            $pathToFile = $fileGenerator->generateFile($parsedContent, $dto->selectedExtension);
+            $resultFileFactory->createResultFileEntityAndSave($dto, $pathToFile);
         }
 
         return $this->render(
             'list.html.twig',
-            [ 'mainForm' => $form->createView()]
+            ['mainForm' => $form->createView()]
         );
     }
 }

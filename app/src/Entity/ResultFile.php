@@ -43,6 +43,20 @@ class ResultFile
      */
     private ?string $extension;
 
+    /**
+     * @param string $resultFile
+     * @param string $fileName
+     * @param string $extension
+     */
+    public function __construct( string $resultFile, string $fileName, string $extension)
+    {
+        $this->createdAt = new DateTimeImmutable();
+        $this->resultFile = $resultFile;
+        $this->fileName = $fileName;
+        $this->extension = $extension;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

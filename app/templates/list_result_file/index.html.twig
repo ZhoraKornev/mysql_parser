@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ListResultFileController!{% endblock %}
+
+{% block body %}
+    <h1>Files list to concat</h1>
+    <form action="{{ path('app_list_result_file') }}" method="POST">
+        {{ form_widget(form) }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

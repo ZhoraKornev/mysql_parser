@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ListResultFileController!{% endblock %}
+
+{% block body %}
+    <h1>Files list</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>File</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for file in files %}
+            <tr>
+                <td>{{ file.id }}</td>
+                <td>{{ file.fileName }}</td>
+                <td>
+                    {% if file.resultFile %}
+                        <a href="{{ path('download_file', {'id': file.id}) }}">Download</a>
+                    {% else %}
+                        No File Available
+                    {% endif %}
+                </td>
+                <td>
+                    <!-- Add additional actions buttons here -->
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
